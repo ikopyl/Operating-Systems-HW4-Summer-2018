@@ -1,11 +1,6 @@
-cmake_minimum_required(VERSION 3.8)
-project(pthread_racer)
-
-find_package( Threads REQUIRED )
-
+cmake_minimum_required(VERSION 3.0)
+project(addersubbers C)
+add_executable(addersubbers add_sub.c)
+find_package (Threads REQUIRED)
+target_link_libraries(addersubbers pthread)
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lpthread")
-
-set(SOURCE_FILES pthread_race.c)
-add_executable(pthread_racer ${SOURCE_FILES})
-target_link_libraries( pthread_racer Threads::Threads )
