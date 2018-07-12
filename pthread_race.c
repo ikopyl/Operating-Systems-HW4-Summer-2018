@@ -15,6 +15,12 @@
 /** END VALUES THAT CANNOT BE CHANGED */
 
 
+/**
+ * use this struct as a parameter for the function
+ * nanosleep. 
+ * For exmaple : nanosleep(&ts, NULL);
+ */
+struct timespec ts = {2, 0 };
 
 
 int
