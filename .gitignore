@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# additional files to ignore:
+threadracer
+.idea
+cmake-build-debug
+.DS_Store
