@@ -34,10 +34,11 @@ int main(int argc, char * argv[])
 {
     pthread_t t1, t2;
     int status_code, i;
+    size_t count;
 
     for (i = 0; i < MAX_ITERATIONS; i++)
     {
-        size_t count = 0;
+        count = 0;
 
         while (count < MAX_THREADS)
         {
