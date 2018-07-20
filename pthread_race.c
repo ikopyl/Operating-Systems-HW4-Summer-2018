@@ -27,7 +27,7 @@ static volatile int global_variable = 0;
 
 static void * thread_sub(void *);
 static void * thread_add(void *);
-void print_thread_info(size_t);
+ssize_t print_thread_info(size_t);
 void check_for_errors_and_terminate(int, char *);
 
 int main(int argc, char * argv[])
@@ -70,7 +70,7 @@ static void * thread_sub(void * args)
     temp -= 1;
     nanosleep(&ts, NULL);
     global_variable = temp;
-    print_thread_info((size_t) args);
+    return (void *) print_thread_info((size_t) args);
 }
 
 static void * thread_add(void * args)
@@ -78,12 +78,12 @@ static void * thread_add(void * args)
     int temp = global_variable;
     temp += 1;
     global_variable = temp;
-    print_thread_info((size_t) args);
+    return (void *) print_thread_info((size_t) args);
 }
 
-void print_thread_info(size_t thread_num)
+ssize_t print_thread_info(size_t thread_num)
 {
-    printf("Current Value written to Global Variables by thread: %6lu \tis %6d\n", thread_num, global_variable);
+    return printf("Current Value written to Global Variables by thread: %6lu \tis %6d\n", thread_num, global_variable);
 }
 
 void check_for_errors_and_terminate(int status_code, char * error_message)
