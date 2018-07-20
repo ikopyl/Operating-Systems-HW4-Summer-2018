@@ -21,16 +21,9 @@
  * For exmaple : nanosleep(&ts, NULL);
  */
 //struct timespec ts = {2, 0 };
+struct timespec ts = { 0, 10 };              /** 10ns - one "shake", (as in a "shake of a lamb's tail"); approximate time of one generation of a nuclear chain reaction with fast neutrons */
 
-struct timespec ts = { 0, 4000 };               /** 4ms, very conservative option */
-//struct timespec ts = { 0, 100 };              /** best result: up to -120 */
-//struct timespec ts = { 0, 50 };              /** best result: up to -121 */
-//struct timespec ts = { 0, 25 };              /** best result: up to -123 */
-//struct timespec ts = { 0, 10 };              /** best result: up to -123 */
-//struct timespec ts = { 0, 5 };              /** best result: up to -124 */
-//struct timespec ts = { 0, 2 };              /** best result: up to -124 */
-
-static volatile int myvar = 0;
+static volatile int global_variable = 0;
 
 static void * thread_sub(void *);
 static void * thread_add(void *);
@@ -63,7 +56,7 @@ int main(int argc, char * argv[])
 
     }
 
-    printf("Final Value of Shared Variable is: %d\n", myvar);
+    printf("Final Value of Shared Variable is: %d\n", global_variable);
 
 
 
@@ -72,24 +65,24 @@ int main(int argc, char * argv[])
 
 static void * thread_sub(void * args)
 {
-    int temp = myvar;
+    int temp = global_variable;
     temp -= 1;
     nanosleep(&ts, NULL);
-    myvar = temp;
+    global_variable = temp;
     print_thread_info((size_t) args);
 }
 
 static void * thread_add(void * args)
 {
-    int temp = myvar;
+    int temp = global_variable;
     temp += 1;
-    myvar = temp;
+    global_variable = temp;
     print_thread_info((size_t) args);
 }
 
 void print_thread_info(size_t thread_num)
 {
-    printf("Current Value written to Global Variables by thread: %6lu \tis %6d\n", thread_num, myvar);
+    printf("Current Value written to Global Variables by thread: %6lu \tis %6d\n", thread_num, global_variable);
 }
 
 void check_for_errors_and_terminate(int status_code, char * error_message)
